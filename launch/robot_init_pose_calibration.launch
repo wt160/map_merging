@@ -1,0 +1,199 @@
+<launch>
+
+  <arg name="robot_num" default="5"/>
+  <arg name="robot_init_pose"/>   <!-- "0 5 0 3 0 1 0 -1 0 -3" -->
+  <arg name="robot_name_list"/>   <!--  "X1_0 X1_1 X1_2 X1_3 X1_4" -->
+  <arg name="robot_name_0"/>
+  <arg name="robot_name_1"/>
+  <arg name="robot_name_2"/>
+  <arg name="robot_name_3"/>
+  <arg name="robot_name_4"/>
+  <arg name="sample_radius"/>
+  <arg name="sample_num"/>
+  <arg name="step_size"/>
+
+
+  
+
+  <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_map_tf_broadcaster"  args="$(arg x) $(arg y) 0 0 0 0 /world $(arg robot_name)/map 100"/>  -->
+
+  <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="world_to_$(arg robot_name)_tf_broadcaster" args="$(arg x) $(arg y) 0 0 0 0 /world /$(arg robot_name)/map "/> -->
+
+
+
+  <node pkg="map_merging" type="robot_init_pose_calibration" respawn="false" name="robot_init_pose_calibration" output="screen">
+      <param name="robot_num" type="int" value="5"/>
+      <param name="robot_name_list" type="str" value="$(arg robot_name_list)"/>
+      <param name="robot_init_pose" type="str" value="$(arg robot_init_pose)"/>
+      <param name="sample_radius" type="double" value="$(arg sample_radius)"/>
+      <param name="sample_num" type="int" value="$(arg sample_num)"/>
+      <param name="step_size" type="double" value="$(arg step_size)"/>
+  </node>
+  
+  
+  
+  <node pkg="costmap_2d" type="costmap_2d_node" name="costmap_calibration_$(arg robot_name_0)" respawn="true">
+    
+    <rosparam ns="costmap" subst_value="true">
+      <!-- footprint: [[-0.5, -0.33], [-0.5, 0.33], [0.5, 0.33], [0.5, -0.33]]
+      footprint_padding: 0.01 -->
+      global_frame: $(arg robot_name_0)/map
+      robot_base_frame: $(arg robot_name_0)
+      update_frequency: 5
+      publish_frequency: 5
+      rolling_window: false
+      always_send_full_costmap: true
+      # Map management parameters
+      unknown_cost_value: 255
+      lethal_cost_threshold: 70
+      <!-- trinary_costmap: true -->
+      <!-- obstacle_layer: {enabled: true, lethal_cost_threshold: 100, track_unknown_space: true} -->
+      robot_radius: 0.0001
+      static:
+        #Can pull data from gmapping, map_server or a non-rolling costmap            
+        map_topic: /$(arg robot_name_0)/map
+        subscribe_to_updates: true 
+      inflation:
+        inflation_radius: 5
+        cost_scaling_factor: 1
+
+      plugins: 
+        - {name: static, type: "costmap_2d::StaticLayer"}
+        - {name: inflation,        type: "costmap_2d::InflationLayer"}  
+      
+
+    </rosparam>
+  </node>
+
+  <node pkg="costmap_2d" type="costmap_2d_node" name="costmap_calibration_$(arg robot_name_1)" respawn="true">
+    
+    <rosparam ns="costmap" subst_value="true">
+      <!-- footprint: [[-0.5, -0.33], [-0.5, 0.33], [0.5, 0.33], [0.5, -0.33]]
+      footprint_padding: 0.01 -->
+      global_frame: $(arg robot_name_1)/map
+      robot_base_frame: $(arg robot_name_1)
+      update_frequency: 5
+      publish_frequency: 5
+      rolling_window: false
+      always_send_full_costmap: true
+      # Map management parameters
+      unknown_cost_value: 255
+      lethal_cost_threshold: 70
+      <!-- trinary_costmap: true -->
+      <!-- obstacle_layer: {enabled: true, lethal_cost_threshold: 100, track_unknown_space: true} -->
+      robot_radius: 0.0001
+      static:
+        #Can pull data from gmapping, map_server or a non-rolling costmap            
+        map_topic: /$(arg robot_name_1)/map
+        subscribe_to_updates: true 
+      inflation:
+        inflation_radius: 5
+        cost_scaling_factor: 1
+
+      plugins: 
+        - {name: static, type: "costmap_2d::StaticLayer"}
+        - {name: inflation,        type: "costmap_2d::InflationLayer"}  
+      
+
+    </rosparam>
+  </node>
+
+  <node pkg="costmap_2d" type="costmap_2d_node" name="costmap_calibration_$(arg robot_name_2)" respawn="true">
+    
+    <rosparam ns="costmap" subst_value="true">
+      <!-- footprint: [[-0.5, -0.33], [-0.5, 0.33], [0.5, 0.33], [0.5, -0.33]]
+      footprint_padding: 0.01 -->
+      global_frame: $(arg robot_name_2)/map
+      robot_base_frame: $(arg robot_name_2)
+      update_frequency: 5
+      publish_frequency: 5
+      rolling_window: false
+      always_send_full_costmap: true
+      # Map management parameters
+      unknown_cost_value: 255
+      lethal_cost_threshold: 70
+      <!-- trinary_costmap: true -->
+      <!-- obstacle_layer: {enabled: true, lethal_cost_threshold: 100, track_unknown_space: true} -->
+      robot_radius: 0.0001
+      static:
+        #Can pull data from gmapping, map_server or a non-rolling costmap            
+        map_topic: /$(arg robot_name_2)/map
+        subscribe_to_updates: true 
+      inflation:
+        inflation_radius: 5
+        cost_scaling_factor: 1
+
+      plugins: 
+        - {name: static, type: "costmap_2d::StaticLayer"}
+        - {name: inflation,        type: "costmap_2d::InflationLayer"}  
+      
+
+    </rosparam>
+  </node>
+
+  <node pkg="costmap_2d" type="costmap_2d_node" name="costmap_calibration_$(arg robot_name_3)" respawn="true">
+    
+    <rosparam ns="costmap" subst_value="true">
+      <!-- footprint: [[-0.5, -0.33], [-0.5, 0.33], [0.5, 0.33], [0.5, -0.33]]
+      footprint_padding: 0.01 -->
+      global_frame: $(arg robot_name_3)/map
+      robot_base_frame: $(arg robot_name_3)
+      update_frequency: 5
+      publish_frequency: 5
+      rolling_window: false
+      always_send_full_costmap: true
+      # Map management parameters
+      unknown_cost_value: 255
+      lethal_cost_threshold: 70
+      <!-- trinary_costmap: true -->
+      <!-- obstacle_layer: {enabled: true, lethal_cost_threshold: 100, track_unknown_space: true} -->
+      robot_radius: 0.0001
+      static:
+        #Can pull data from gmapping, map_server or a non-rolling costmap            
+        map_topic: /$(arg robot_name_3)/map
+        subscribe_to_updates: true 
+      inflation:
+        inflation_radius: 5
+        cost_scaling_factor: 1
+
+      plugins: 
+        - {name: static, type: "costmap_2d::StaticLayer"}
+        - {name: inflation,        type: "costmap_2d::InflationLayer"}  
+      
+
+    </rosparam>
+  </node>
+
+  <node pkg="costmap_2d" type="costmap_2d_node" name="costmap_calibration_$(arg robot_name_4)" respawn="true">
+    
+    <rosparam ns="costmap" subst_value="true">
+      <!-- footprint: [[-0.5, -0.33], [-0.5, 0.33], [0.5, 0.33], [0.5, -0.33]]
+      footprint_padding: 0.01 -->
+      global_frame: $(arg robot_name_4)/map
+      robot_base_frame: $(arg robot_name_4)
+      update_frequency: 5
+      publish_frequency: 5
+      rolling_window: false
+      always_send_full_costmap: true
+      # Map management parameters
+      unknown_cost_value: 255
+      lethal_cost_threshold: 70
+      <!-- trinary_costmap: true -->
+      <!-- obstacle_layer: {enabled: true, lethal_cost_threshold: 100, track_unknown_space: true} -->
+      robot_radius: 0.0001
+      static:
+        #Can pull data from gmapping, map_server or a non-rolling costmap            
+        map_topic: /$(arg robot_name_4)/map
+        subscribe_to_updates: true 
+      inflation:
+        inflation_radius: 5
+        cost_scaling_factor: 1
+
+      plugins: 
+        - {name: static, type: "costmap_2d::StaticLayer"}
+        - {name: inflation,        type: "costmap_2d::InflationLayer"}  
+      
+
+    </rosparam>
+  </node>
+</launch>
